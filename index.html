@@ -662,6 +662,43 @@
         #carouselFooter .ctrl-btn {
             background: rgba(255, 255, 255, .85);
         }
+
+        /* === Full-bleed definitivo para 'Sobre a Loja' (sobrepõe inline) === */
+        #carouselFooter {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        #sobreLoja {
+            width: 100vw;
+            max-width: 100vw;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        #carouselFooter .slide {
+            min-width: 100% !important;
+        }
+
+        #carouselFooter .slide-inner {
+            grid-template-columns: 1fr !important;
+            padding: 0 !important;
+            justify-items: center;
+            text-align: center;
+        }
+
+        #carouselFooter .hero-img {
+            width: 100%;
+            height: clamp(220px, 36vw, 560px);
+            object-fit: cover;
+            border-radius: 0 !important;
+            display: block;
+        }
     </style>
 </head>
 
@@ -965,7 +1002,7 @@
         function cardHTML(p) {
             const text1 = encodeURIComponent(`Olá! Quero alugar ${p.nome}.`);
             return `
-          <article class="card" data-nome="${p.nome.toLowerCase()}" data-categoria="${p.categoria.toLowerCase()}">
+          <article class="card reveal-on-scroll" data-nome="${p.nome.toLowerCase()}" data-categoria="${p.categoria.toLowerCase()}">
             <img src="${p.img}" alt="${p.nome}">
             <div>
               <h3>${p.nome}</h3>
@@ -990,26 +1027,29 @@
             gridCompactacao.innerHTML = produtos.filter(p => p.categoria.includes('Compactação')).map(cardHTML).join('');
             gridEnergia.innerHTML = produtos.filter(p => p.categoria.includes('Energia')).map(cardHTML).join('');
         }
+        // Após renderizar, re-observar cards e atualizar visibilidade das seções
+        if (window._observeProductsOnScroll) window._observeProductsOnScroll();
+        if (typeof updateSectionVisibility === 'function') updateSectionVisibility();
+
 
         render();
+        if (typeof updateSectionVisibility === 'function') updateSectionVisibility();
 
-        // ===== Busca de produtos (com auto-reset ao limpar) =====
+
+        // ===== Busca de produtos (auto-reset + acentos + seções dinâmicas) =====
         const q = document.getElementById('q');
         const btnSearch = document.getElementById('btnSearch');
 
         function normalize(str) {
-            return (str || '')
-                .toLowerCase()
-                .normalize('NFD')               // separa acentos
-                .replace(/[\u0300-\u036f]/g, ''); // remove acentos
+            return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         }
 
         function performSearch() {
-            const term = normalize(q.value.trim());
+            const term = normalize((q ? q.value : '').trim());
             const allCards = document.querySelectorAll('.card');
-            // Se o campo estiver vazio, mostra tudo
             if (term === '') {
                 allCards.forEach(c => { c.style.display = ''; });
+                updateSectionVisibility();
                 return;
             }
             allCards.forEach(c => {
@@ -1018,19 +1058,14 @@
                 const match = nome.includes(term) || categoria.includes(term);
                 c.style.display = match ? '' : 'none';
             });
+            updateSectionVisibility();
         }
 
-        // Clique no botão
-        btnSearch.addEventListener('click', performSearch);
-
-        // Enter no campo
-        q.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') performSearch();
-        });
-
-        // Atualiza em tempo real e reseta ao apagar
-        q.addEventListener('input', performSearch);
-
+        if (btnSearch) btnSearch.addEventListener('click', performSearch);
+        if (q) {
+            q.addEventListener('keydown', (e) => { if (e.key === 'Enter') performSearch(); });
+            q.addEventListener('input', performSearch);
+        }
 
 
         // ===== Reveal on Scroll (produtos) =====
