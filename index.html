@@ -568,6 +568,100 @@
         }
 
         /* 3) NÃO mexer nas seções de PRODUTOS (ficam à esquerda por padrão) */
+
+        /* === Animações de entrada ao rolar (IntersectionObserver) === */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .6s ease, transform .6s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sugestão de "stagger": cada card no grid aparece com pequeno atraso */
+        .grid .card.reveal-on-scroll {
+            transition-delay: .06s;
+        }
+
+        .grid .card.reveal-on-scroll:nth-child(2) {
+            transition-delay: .12s;
+        }
+
+        .grid .card.reveal-on-scroll:nth-child(3) {
+            transition-delay: .18s;
+        }
+
+        .grid .card.reveal-on-scroll:nth-child(4) {
+            transition-delay: .24s;
+        }
+
+        .grid .card.reveal-on-scroll:nth-child(5) {
+            transition-delay: .30s;
+        }
+
+        .grid .card.reveal-on-scroll:nth-child(6) {
+            transition-delay: .36s;
+        }
+
+        /* === "Sobre a Loja" em tela cheia (full‑bleed, borda a borda) === */
+        #sobreLoja {
+            width: 100vw;
+            max-width: 100vw;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            text-align: center;
+        }
+
+        #carouselFooter {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            border-radius: 0;
+            /* sem cantos no full-bleed */
+            box-shadow: none;
+            background: var(--surface);
+        }
+
+        #carouselFooter .slides {
+            width: 100%;
+        }
+
+        #carouselFooter .slide {
+            min-width: 100% !important;
+        }
+
+        #carouselFooter .slide-inner {
+            grid-template-columns: 1fr !important;
+            /* 1 coluna também no desktop */
+            padding: 0 !important;
+            justify-items: center;
+            text-align: center;
+        }
+
+        #carouselFooter .hero-img {
+            width: 100%;
+            display: block;
+            height: clamp(220px, 36vw, 560px);
+            /* altura responsiva */
+            object-fit: cover;
+            border-radius: 0;
+            /* bordas retas no full-bleed */
+        }
+
+        /* Reposiciona bullets e setas para ficarem por cima da imagem full-bleed */
+        #carouselFooter .bullets {
+            bottom: 14px;
+        }
+
+        #carouselFooter .ctrl-btn {
+            background: rgba(255, 255, 255, .85);
+        }
     </style>
 </head>
 
@@ -899,19 +993,66 @@
 
         render();
 
-        // ===== Busca de produtos =====
+        // ===== Busca de produtos (com auto-reset ao limpar) =====
         const q = document.getElementById('q');
         const btnSearch = document.getElementById('btnSearch');
+
+        function normalize(str) {
+            return (str || '')
+                .toLowerCase()
+                .normalize('NFD')               // separa acentos
+                .replace(/[\u0300-\u036f]/g, ''); // remove acentos
+        }
+
         function performSearch() {
-            const term = q.value.trim().toLowerCase();
+            const term = normalize(q.value.trim());
             const allCards = document.querySelectorAll('.card');
+            // Se o campo estiver vazio, mostra tudo
+            if (term === '') {
+                allCards.forEach(c => { c.style.display = ''; });
+                return;
+            }
             allCards.forEach(c => {
-                const match = c.dataset.nome.includes(term) || c.dataset.categoria.includes(term);
+                const nome = normalize(c.dataset.nome);
+                const categoria = normalize(c.dataset.categoria);
+                const match = nome.includes(term) || categoria.includes(term);
                 c.style.display = match ? '' : 'none';
             });
         }
+
+        // Clique no botão
         btnSearch.addEventListener('click', performSearch);
-        q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { performSearch(); } });
+
+        // Enter no campo
+        q.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        // Atualiza em tempo real e reseta ao apagar
+        q.addEventListener('input', performSearch);
+
+
+
+        // ===== Reveal on Scroll (produtos) =====
+        (function () {
+            const opts = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 };
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('is-visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, opts);
+            function observeNewCards() {
+                document.querySelectorAll('.reveal-on-scroll').forEach(el => io.observe(el));
+            }
+            // observar após render inicial
+            observeNewCards();
+            // Se no futuro você chamar render() novamente, chame observeNewCards() em seguida.
+            window._observeProductsOnScroll = observeNewCards;
+        })();
+
 
         // Footer year
         document.getElementById('yr').textContent = new Date().getFullYear();
