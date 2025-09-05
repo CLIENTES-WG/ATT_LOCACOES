@@ -489,32 +489,49 @@
             }
         }
 
-        /* Centralização específica do carrossel "Sobre a Loja" */
-        #carouselFooter {
-            margin: 0 auto;
-            max-width: 820px;
-            width: 100%;
+        /* === Centralização total do carrossel "Sobre a Loja" === */
+        #sobreLoja {
+            /* wrapper da seção */
+            display: flex;
+            justify-content: center;
         }
 
+        #carouselFooter {
+            /* bloco do carrossel */
+            width: 100%;
+            max-width: 860px;
+            /* ajuste se quiser maior/menor */
+            margin: 0 auto;
+        }
+
+        /* anula o layout em 2 colunas do CSS global no desktop e remove "empurrões" */
         #carouselFooter .slide-inner {
             grid-template-columns: 1fr !important;
-            /* força 1 coluna no desktop */
+            /* evita 2 colunas ≥720px */
+            padding: 0 0 14px !important;
+            /* zera as laterais que criavam folga */
             justify-items: center;
             text-align: center;
         }
 
-        #carouselFooter .hero-img {
+        /* cada slide ocupa 100% do carrossel */
+        #carouselFooter .slides {
             width: 100%;
-            height: auto;
-            /* evita cortar no mobile */
-            max-height: 360px;
-            /* limite opcional no desktop */
-            object-fit: cover;
         }
 
-        #carouselFooter .slide-sub {
-            max-width: 680px;
-            margin: 8px auto 0;
+        #carouselFooter .slide {
+            min-width: 100% !important;
+        }
+
+        /* imagem sem deslocamento lateral */
+        #carouselFooter .hero-img {
+            display: block;
+            /* tira possíveis espaços inline */
+            width: 100%;
+            height: auto;
+            max-height: 420px;
+            /* opcional no desktop */
+            object-fit: cover;
         }
     </style>
 </head>
@@ -677,7 +694,7 @@
 
 
     <!-- Carrossel Sobre a Loja (centralizado) -->
-    <section class="section container" aria-label="Sobre a Loja" style="text-align:center;">
+    <section id="sobreLoja" class="section container" aria-label="Sobre a Loja" style="text-align:center;">
         <h2 style="margin-bottom:12px;">Sobre a Castelão Locações</h2>
         <div class="carousel" id="carouselFooter" style="margin:0 auto; max-width:820px; width:100%;">
             <div class="slides" id="slidesFooter">
@@ -769,13 +786,13 @@
 
         // ===== Produtos (dados simples para exemplo) =====
         const produtos = [
-            
+
             // CONCRETAGEM
             // =========================
             { id: 'p1', nome: 'Betoneira 400 L', categoria: 'Concretagem', img: 'https://img.lojadomecanico.com.br/IMAGENS/31/284/147416/1596113228463.JPG' },
             { id: 'p6', nome: 'Vibrador de imersão', categoria: 'Concretagem', img: 'https://img.lojadomecanico.com.br/IMAGENS/31/572/75454/1703608875363.JPG' },
 
-            
+
             // PERFURAÇÃO & DEMOLIÇÃO
             // =========================
             { id: 'p2', nome: 'Martelete perfurador 2 kg', categoria: 'Perfuração & Demolição', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6LSTvXYRKR_T7BOaBnDyYGa5aJLV7ToX0Iw&s' },
