@@ -490,10 +490,20 @@
         }
 
         /* === Centralização total do carrossel "Sobre a Loja" === */
+        /* Empilha TÍTULO + CARROSSEL e centraliza em todas as telas */
         #sobreLoja {
-            /* wrapper da seção */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            /* << empilha (não fica lado a lado) */
+            align-items: center;
+            /* centraliza o bloco */
+        }
+
+        /* só para garantir o título centralizado e com respiro */
+        #sobreLoja h2 {
+            width: 100%;
+            text-align: center;
+            margin: 0 0 12px;
         }
 
         #carouselFooter {
@@ -533,6 +543,31 @@
             /* opcional no desktop */
             object-fit: cover;
         }
+
+        /* === Centralização solicitada === */
+        /* 1) Centralizar BUSCA (campo + dica) */
+        .search {
+            text-align: center;
+        }
+
+        .search .field {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        /* 2) Centralizar "Sobre a Loja" (já está com títulos e imagens centralizados) */
+        #sobreLoja {
+            text-align: center;
+        }
+
+        #carouselFooter {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 3) NÃO mexer nas seções de PRODUTOS (ficam à esquerda por padrão) */
     </style>
 </head>
 
