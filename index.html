@@ -699,6 +699,21 @@
             border-radius: 0 !important;
             display: block;
         }
+
+        /* Hover e focus para chips */
+        .chip {
+            transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+
+        .chip:hover,
+        .chip:focus-visible {
+            background: #ffffff;
+            color: #0b3b5b;
+            border-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
+            transform: translateY(-1px);
+            outline: none;
+        }
     </style>
 </head>
 
@@ -973,12 +988,13 @@
             // =========================
             // COMPACTAÇÃO
             // =========================
-            { id: 'p7', nome: 'Compactador (Sapo)', categoria: 'Compactação', img: 'https://www.clickgeradores.com.br/img/products/photo/2605.jpg' },
+            { id: 'p7', nome: 'Compactador ', categoria: 'Compactação', img: 'https://www.clickgeradores.com.br/img/products/photo/2605.jpg' },
+            { id: 'p8', nome: 'Compactador de Placas', categoria: 'Compactação', img: 'https://m.media-amazon.com/images/I/71MmoyueWUL.jpg' },
 
             // =========================
             // ENERGIA
             // =========================
-            { id: 'p8', nome: 'Gerador 5 kVA', categoria: 'Energia', img: 'https://d1p6nzzdute2g.cloudfront.net/lojas/loja-36/9d2c7542-ef42-4fbe-a5f6-c71cee9e527a' },
+            { id: 'p9', nome: 'Gerador 5 kVA', categoria: 'Energia', img: 'https://d1p6nzzdute2g.cloudfront.net/lojas/loja-36/9d2c7542-ef42-4fbe-a5f6-c71cee9e527a' },
 
             // =========================
             // ADITIVOS
