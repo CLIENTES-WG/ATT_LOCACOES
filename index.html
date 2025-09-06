@@ -970,19 +970,46 @@
             /* antes 40px */
             width: auto !important;
         }
-    
-/* — Ajuste solicitado: marcas SEM hover e COM cores originais — */
-.brands-list .brand img{
-  filter: none !important;
-  opacity: 1 !important;
-  transition: none !important;
-}
-.brands-list .brand:hover img{
-  filter: none !important;
-  opacity: 1 !important;
-  transform: none !important;
-}
 
+        /* — Ajuste solicitado: marcas SEM hover e COM cores originais — */
+        .brands-list .brand img {
+            filter: none !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        .brands-list .brand:hover img {
+            filter: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+
+        /* === MOBILE-ONLY FIX: Marcas perfeitamente encaixadas sem rolagem horizontal === */
+        @media (max-width: 720px) {
+
+            /* Grid multi‑linha, sem carrossel nem rolagem lateral */
+            .brands-list {
+                display: grid !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                /* 3 por linha no mobile */
+                grid-auto-flow: initial !important;
+                overflow-x: hidden !important;
+                overflow-y: visible !important;
+                gap: 10px !important;
+                padding: 6px 0 !important;
+            }
+
+            .brands-list .brand {
+                min-height: 60px !important;
+                padding: 8px 10px !important;
+            }
+
+            .brands-list .brand img {
+                max-width: 90px !important;
+                max-height: 28px !important;
+            }
+        }
     </style>
 </head>
 
@@ -1230,27 +1257,33 @@
             <h3 class="brands-title">Trabalhamos com as melhores marcas</h3>
             <div class="brands-list" role="list">
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fmakita.png?alt=media&token=e197a8aa-5518-4fde-9377-cf1473d7c400"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fmakita.png?alt=media&token=e197a8aa-5518-4fde-9377-cf1473d7c400"
                         alt="Makita" />
                 </div>
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fbosch.png?alt=media&token=ad24c19e-a621-416a-9a99-63f960b077d0"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fbosch.png?alt=media&token=ad24c19e-a621-416a-9a99-63f960b077d0"
                         alt="Bosch" />
                 </div>
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fdewalt.png?alt=media&token=5fbb6f40-ebed-4eb3-98d8-bbedf9332cc9"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fdewalt.png?alt=media&token=5fbb6f40-ebed-4eb3-98d8-bbedf9332cc9"
                         alt="DeWalt" />
                 </div>
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fvonder.png?alt=media&token=b56b775b-eb6d-4da2-a3fd-cc062ca36d56"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fvonder.png?alt=media&token=b56b775b-eb6d-4da2-a3fd-cc062ca36d56"
                         alt="vonder" />
                 </div>
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fstihl.png?alt=media&token=8d77bb7c-a398-4fc6-af96-ff360b36ebea"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fstihl.png?alt=media&token=8d77bb7c-a398-4fc6-af96-ff360b36ebea"
                         alt="Stihl" />
                 </div>
                 <div class="brand" role="listitem">
-                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fgerdau.png?alt=media&token=8d83d69f-d9a5-4996-8be4-b8f2fe585a04"
+                    <img loading="lazy"
+                        src="https://firebasestorage.googleapis.com/v0/b/albuns-mascarado.firebasestorage.app/o/SITE%20LOCA%C3%87%C3%95ES%2Fmarcas%2Fgerdau.png?alt=media&token=8d83d69f-d9a5-4996-8be4-b8f2fe585a04"
                         alt="Gerdau" />
                 </div>
             </div>
